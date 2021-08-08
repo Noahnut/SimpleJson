@@ -58,8 +58,20 @@ func getJsonValue(fieldString string, value reflect.Value, valuetype reflect.Typ
 		return fmt.Sprintf(`%s%s`, fieldString, string(structEncodeState(value)))
 	case reflect.Slice:
 		return fmt.Sprintf(`%s%s`, fieldString, arrayEncodeState(value))
+	case reflect.Bool:
+		return fmt.Sprintf(`%s%s`, fieldString, boolEncodeState(value))
 	default:
 		return ""
+	}
+}
+
+func boolEncodeState(value reflect.Value) string {
+	boolen := value.Bool()
+
+	if boolen {
+		return "true"
+	} else {
+		return "false"
 	}
 }
 

@@ -23,6 +23,7 @@ type testStruct struct {
 	E testStructTwo
 	F []string
 	G []int
+	I bool
 }
 
 func TestSimpleJson(t *testing.T) {
@@ -36,10 +37,11 @@ func TestSimpleJson(t *testing.T) {
 		}},
 		F: []string{"A", "B"},
 		G: []int{1, 2},
+		I: true,
 	}
 	result, _ := Marshal(ts)
 	log.Println(string(result))
-	if string(result) != `{"test":1,"B":"D","C":"E","E":{"D":"F","E":"H","test":{"G":10,"K":"test"}},"F":["A","B"],"G":[1,2]}` {
+	if string(result) != `{"test":1,"B":"D","C":"E","E":{"D":"F","E":"H","test":{"G":10,"K":"test"}},"F":["A","B"],"G":[1,2],"I":true}` {
 		t.Error("Marshal fail")
 	}
 }
