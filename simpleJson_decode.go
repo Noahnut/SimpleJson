@@ -13,10 +13,12 @@ const (
 	scanLiteral
 	scanObjectKey
 	scanArrayBegin
+	scanArrayValue
 	scanContinue
 	scanSkipSpace
 	scanEndObject
 	scanError
+	scanArrayEnd
 )
 
 const (
@@ -189,6 +191,16 @@ func stateScanEndValue(s *scanner, c byte) int {
 		if c == '}' {
 			s.popParserState()
 			return scanEndObject
+		}
+	case parserArray:
+		if c == ',' {
+			s.step = stepBeginValue
+			return scanArrayValue
+		}
+
+		if c == ']' {
+			s.popParserState()
+			return scanArrayEnd
 		}
 	}
 
